@@ -28,7 +28,9 @@ public class BubbleFrame extends JFrame {
     }
 
     public void initObject() {
-        backgroundMap = new JLabel(new ImageIcon(BubbleFrame.class.getResource("image/BackgroundMap.png")));
+        //backgroundMap = new JLabel(new ImageIcon(BubbleFrame.class.getResource("image/BackgroundMap.png")));
+        backgroundMap = new JLabel(new ImageIcon(getClass().getResource("image/BackgroundMap.png")));
+        
         setContentPane(backgroundMap); //JLabel을 JPanel로 바꿔버림
         player = new Player(mContext);
         add(player);

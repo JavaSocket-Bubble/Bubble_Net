@@ -49,10 +49,10 @@ public class Player extends JLabel implements Moveable {
     }
 
     public void initObject() {
-        playerR = new ImageIcon("image/playerR.png");
-        playerL = new ImageIcon("image/playerL.png");
-        playerRdie = new ImageIcon("image/playerRDie.png");
-        playerLdie = new ImageIcon("image/playerLDie.png");
+        playerR = new ImageIcon(getClass().getResource("image/playerR.png"));
+        playerL = new ImageIcon(getClass().getResource("image/playerL.png"));
+        playerRdie = new ImageIcon(getClass().getResource("image/playerRDie.png"));
+        playerLdie = new ImageIcon(getClass().getResource("image/playerLDie.png"));
         bubbleList = new ArrayList<>();
     }
 
