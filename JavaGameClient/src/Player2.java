@@ -49,11 +49,7 @@ public class Player2 extends JLabel implements Moveable {
     }
 
     public void initObject() {
-//        player2R = new ImageIcon(Player2.class.getResource("image/player2R.png"));
-//        player2L = new ImageIcon(Player2.class.getResource("image/player2L.png"));
-//        player2Rdie = new ImageIcon(Player2.class.getResource("image/playerRDie.png"));
-//        player2Ldie = new ImageIcon(Player2.class.getResource("image/playerLDie.png"));
-    	player2R = new ImageIcon("image/player2R.png");
+        player2R = new ImageIcon("image/player2R.png");
         player2L = new ImageIcon("image/player2L.png");
         player2Rdie = new ImageIcon("image/playerRDie.png");
         player2Ldie = new ImageIcon("image/playerLDie.png");

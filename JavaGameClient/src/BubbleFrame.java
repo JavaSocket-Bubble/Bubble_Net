@@ -28,10 +28,7 @@ public class BubbleFrame extends JFrame {
     }
 
     public void initObject() {
-        backgroundMap = new JLabel(new ImageIcon("image/BackgroundMap.png"));
-    	//backgroundMap = new JLabel(new ImageIcon(BubbleFrame.class.getResource("./image/backgroundMap.png")));
-        //GameBackground.setIcon(new ImageIcon(JavaGameClientView.class.getResource("./image/startPage.png")));
-        
+        backgroundMap = new JLabel(new ImageIcon(BubbleFrame.class.getResource("image/BackgroundMap.png")));
         setContentPane(backgroundMap); //JLabel을 JPanel로 바꿔버림
         player = new Player(mContext);
         add(player);
@@ -43,7 +40,7 @@ public class BubbleFrame extends JFrame {
         enemyList.add(new Enemy(mContext, EnemyWay.RIGHT));
         enemyList.add(new Enemy(mContext, EnemyWay.LEFT));
         for(Enemy e : enemyList) add(e);
-        new BGM();
+        //new BGM();
     }
 
     public void initSetting() {

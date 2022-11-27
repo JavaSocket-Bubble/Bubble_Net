@@ -1,3 +1,5 @@
+
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,12 +20,23 @@ public class BackgroundPlayerService implements Runnable{
         this.bubbleList = player.getBubbleList();
 
         try {
-            image = ImageIO.read(new File("image/BackgroundMapService.png"));
-        	//image = ImageIO.read(new File(BackgroundPlayerService.class.getResource("image/BackgroundMapService.png")));
+        	//System.out.println("여기 들어오긴하");
+            image = ImageIO.read(new File("image/backgroundMapService.png"));
+
+            //image = ImageIO.read(getClass().getResource("images/backgroundMapService.png"));
+                        
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
+    
+// // URL 클래스를 이용하여 이미지 파일을 로드하여 BufferedImage로 전환하는 예
+//    URL imgURL = getClass().getResource("images/backgroundMapService.png");
+//    try {
+//        img = ImageIO.read(imgURL);
+//        // 로컬 시스템에 이미지 파일을 생성하는 예
+//        ImageIO.write(img, "jpg", new File("D:/test/myFile.jpg"));
+//        
 
     @Override
     public void run() {

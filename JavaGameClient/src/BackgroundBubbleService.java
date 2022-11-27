@@ -1,8 +1,6 @@
 
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,8 +19,6 @@ public class BackgroundBubbleService{
 
         try {
             image = ImageIO.read(new File("image/BackgroundMapService.png"));
-        	//image = ImageIO.read(new File(BackgroundBubbleService.class.getResource("image/BackgroundMapService.png")));
-        	//new ImageIcon(BubbleFrame.class.getResource("./image/backgroundMap.png"))
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -50,13 +50,9 @@ public class Bubble extends JLabel implements Moveable {
     }
 
     private void initObject() {
-//        bubble = new ImageIcon(Bubble.class.getResource("image/bubble.png"));
-//        bubbled = new ImageIcon(Bubble.class.getResource("image/bubbled.png"));
-//        bomb = new ImageIcon(Bubble.class.getResource("image/bomb.png"));
-    	bubble = new ImageIcon("image/bubble.png");
+        bubble = new ImageIcon("image/bubble.png");
         bubbled = new ImageIcon("image/bubbled.png");
         bomb = new ImageIcon("image/bomb.png");
-
 
         backgroundBubbleService = new BackgroundBubbleService(this);
     }

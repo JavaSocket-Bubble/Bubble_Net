@@ -48,9 +48,7 @@ public class Enemy extends JLabel implements Moveable {
     }
 
     public void initObject() {
-//        enemyR = new ImageIcon(Enemy.class.getResource("image/enemyR.png"));
-//        enemyL = new ImageIcon(Enemy.class.getResource("image/enemyL.png"));
-    	enemyR = new ImageIcon("image/enemyR.png");
+        enemyR = new ImageIcon("image/enemyR.png");
         enemyL = new ImageIcon("image/enemyL.png");
     }
 

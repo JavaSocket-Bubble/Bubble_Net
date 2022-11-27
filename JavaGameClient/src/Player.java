@@ -1,3 +1,4 @@
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -5,11 +6,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Getter
 @Setter
-
-
 
 //class Player => new 가능한 애들!! 게임에 존재할 수 존재할 수 있음.(추상메소드를 가질 수 없다)
 public class Player extends JLabel implements Moveable {
@@ -51,10 +49,6 @@ public class Player extends JLabel implements Moveable {
     }
 
     public void initObject() {
-//        playerR = new ImageIcon(Player.class.getResource("image/playerR.png"));
-//        playerL = new ImageIcon(Player.class.getResource("image/playerL.png"));
-//        playerRdie = new ImageIcon(Player.class.getResource("image/playerRDie.png"));
-//        playerLdie = new ImageIcon(Player.class.getResource("image/playerLDie.png"));
         playerR = new ImageIcon("image/playerR.png");
         playerL = new ImageIcon("image/playerL.png");
         playerRdie = new ImageIcon("image/playerRDie.png");
