@@ -12,12 +12,12 @@ public class BackgroundPlayerService2 implements Runnable{
     private BufferedImage image;
     //private Player player;
     private Player2 player2;
-    private List<Bubble> bubbleList2;
+    //private List<Bubble> bubbleList2;
 
     //플레이어, 버블
     public BackgroundPlayerService2(Player2 player2) {
         this.player2 = player2;
-        this.bubbleList2 = player2.getBubbleList2();
+        //this.bubbleList2 = player2.getBubbleList2();
 
         try {
             image = ImageIO.read(new File("image/BackgroundMapService.png"));
@@ -30,19 +30,19 @@ public class BackgroundPlayerService2 implements Runnable{
     public void run() {
         while(player2.getState() == 0) {
 
-            // 1. 버블 충돌 체크
-            for(int i =0; i<bubbleList2.size(); i++) {
-                Bubble bubble = bubbleList2.get(i);
-
-                if(bubble.getState() == 1) {
-                    if ((Math.abs(player2.getX() - bubble.getX()) < 10) &&
-                            (Math.abs(player2.getY() - bubble.getY()) > 0 && Math.abs(player2.getY() - bubble.getY()) < 50)) {
-                        //System.out.println("적군 사살 완료");
-                        bubble.clearBubbled();
-                        break;
-                    }
-                }
-            }
+//            // 1. 버블 충돌 체크
+//            for(int i =0; i<bubbleList2.size(); i++) {
+//                Bubble bubble = bubbleList2.get(i);
+//
+//                if(bubble.getState() == 1) {
+//                    if ((Math.abs(player2.getX() - bubble.getX()) < 10) &&
+//                            (Math.abs(player2.getY() - bubble.getY()) > 0 && Math.abs(player2.getY() - bubble.getY()) < 50)) {
+//                        //System.out.println("적군 사살 완료");
+//                        bubble.clearBubbled();
+//                        break;
+//                    }
+//                }
+//            }
 
 
             // 2. 벽 충돌 체크
