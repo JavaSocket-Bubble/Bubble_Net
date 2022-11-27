@@ -13,7 +13,7 @@ import java.util.List;
 public class Player2 extends JLabel implements Moveable {
 
     private BubbleFrame mContext;
-    private List<Bubble> bubbleList2;
+    private List<Bubble> bubbleList;
 
     //위치상태
     private int x;
@@ -53,7 +53,7 @@ public class Player2 extends JLabel implements Moveable {
         player2L = new ImageIcon(getClass().getResource("image/player2L.png"));
         player2Rdie = new ImageIcon(getClass().getResource("image/playerRDie.png"));
         player2Ldie = new ImageIcon(getClass().getResource("image/playerLDie.png"));
-        bubbleList2 = new ArrayList<>();
+        //bubbleList = new ArrayList<>();
     }
 
     public void initSetting() {
@@ -78,20 +78,20 @@ public class Player2 extends JLabel implements Moveable {
         new Thread(new BackgroundPlayerService2(this)).start();
     }
 
-    @Override
-    public void attack() {
-        new Thread(()->{
-            Bubble bubble = new Bubble(mContext);
-            mContext.add(bubble);
-            bubbleList2.add(bubble);
-            if(playerWay == PlayerWay.LEFT) {
-                bubble.left();
-            }
-            else {
-                bubble.right();
-            }
-        }).start();
-    }
+//    @Override
+//    public void attack() {
+//        new Thread(()->{
+//            Bubble bubble = new Bubble(mContext);
+//            mContext.add(bubble);
+//            bubbleList.add(bubble);
+//            if(playerWay == PlayerWay.LEFT) {
+//                bubble.left();
+//            }
+//            else {
+//                bubble.right();
+//            }
+//        }).start();
+//    }
 
     @Override
     public void left() {

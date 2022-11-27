@@ -65,8 +65,8 @@ public class Bubble extends JLabel implements Moveable {
         x = player.getX();
         y = player.getY();
 
-        x2 = player2.getX();
-        y2 = player2.getY();
+//        x2 = player2.getX();
+//        y2 = player2.getY();
 
         setIcon(bubble);
         setSize(50,50);
@@ -92,9 +92,9 @@ public class Bubble extends JLabel implements Moveable {
         //범위를 줘야 하므로 while문 대신 for문 사용
         Stop: for (int i=0; i<400; i++) {
             x--;
-            x2--;
+            //x2--;
             setLocation(x,y); //이동
-            setLocation(x2,y2); //이동
+            //setLocation(x2,y2); //이동
 
             if(backgroundBubbleService.leftWall()) {//true면 벽에 부딪힌 것
                 left = false;
