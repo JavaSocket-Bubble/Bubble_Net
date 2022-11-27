@@ -580,7 +580,6 @@ public class JavaGameClientView extends JFrame {
             //키보드 클릭 핸들러 이벤트
             public void keyPressed(KeyEvent e) {
                 //new waitingRoom();
-            	System.out.print("클릭되냐;;");
                 new BubbleFrame();
                 setVisible(false);
             }
