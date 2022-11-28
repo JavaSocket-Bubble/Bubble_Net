@@ -63,6 +63,7 @@ public class BubbleFrame extends JFrame {
                         //left가 private boolean이므로 게터 사용시 is라고 해야함.
                         if(!player.isLeft() && !player.isLeftWallCrash()) {
                             player.left();
+                            //sendObject();
                         }
                         break;
                     case KeyEvent.VK_RIGHT:
