@@ -44,6 +44,9 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class JavaGameClientView extends JFrame {
     /**
      *
@@ -51,7 +54,11 @@ public class JavaGameClientView extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField txtInput;
+    
     private String UserName;
+    private String ipAddr;
+    private String portNo;
+    
     private JButton btnSend;
     private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
     private Socket socket; // 연결소켓
@@ -71,7 +78,7 @@ public class JavaGameClientView extends JFrame {
     private FileDialog fd;
     private JButton imgBtn;
 
-    JPanel panel;
+    private JPanel panel;
     private JLabel lblMouseEvent;
     private Graphics gc;
     private int pen_size = 2; // minimum 2
@@ -80,6 +87,9 @@ public class JavaGameClientView extends JFrame {
     private Graphics gc2 = null;
 
     private final JLabel GameBackground = new JLabel("New label");
+    
+    public JavaGameClientView view;
+    public BubbleFrame game;
 
 
 
@@ -88,6 +98,7 @@ public class JavaGameClientView extends JFrame {
      * @throws BadLocationException
      */
     public JavaGameClientView(String username, String ip_addr, String port_no)  {
+    	view = this;
 //----------------메인 창 세팅
         setUndecorated(false); // 위에 창을 없애준
         setTitle("BubbleBoggle");
@@ -579,8 +590,7 @@ public class JavaGameClientView extends JFrame {
             @Override
             //키보드 클릭 핸들러 이벤트
             public void keyPressed(KeyEvent e) {
-                //new waitingRoom();
-                new BubbleFrame();
+            	game = new BubbleFrame(UserName, view);
                 setVisible(false);
                 ChatMsg msg = new ChatMsg(UserName, "200", "Ready");
                 SendObject(msg);

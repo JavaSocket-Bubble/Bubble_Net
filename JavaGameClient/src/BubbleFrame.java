@@ -2,9 +2,33 @@
 import lombok.Getter;
 import lombok.Setter;
 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.FileDialog;
+import java.awt.event.*;
+import java.awt.image.ImageObserver;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.Socket;
+
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+
+import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +36,22 @@ import java.util.List;
 @Setter
 
 public class BubbleFrame extends JFrame {
+	private static final long serialVersionUID = 1L;
+	
+	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
+    private Socket socket; // 연결소켓
+    private InputStream is;
+    private OutputStream os;
+    private DataInputStream dis;
+    private DataOutputStream dos;
 
+    private ObjectInputStream ois;
+    private ObjectOutputStream oos;
+
+    private String UserName;
+    private String ipAddr;
+    private String portNo;
+    
     private JLabel backgroundMap;
     private Player player;
     private Player2 player2;
@@ -20,7 +59,9 @@ public class BubbleFrame extends JFrame {
     //private Enemy enemy;
     private List<Enemy> enemyList; //컬렉션으로 관리
 
-    public BubbleFrame() {
+    public BubbleFrame(String username, JavaGameClientView view) {
+    	UserName = username;
+    	
         initObject();
         initSetting();
         initListener();
@@ -129,5 +170,106 @@ public class BubbleFrame extends JFrame {
         });
     }
 
+    
+    
+    //정은 맘대로 해보기
+    
+ // Server Message를 수신해서 화면에 표시
+    class ListenNetwork extends Thread {
+        public void run() {
+            while (true) {
+                try {
+
+                    Object obcm = null;
+                    String msg = null;
+                    ChatMsg cm;
+                    try {
+                        obcm = ois.readObject();
+                    } catch (ClassNotFoundException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                        break;
+                    }
+                    if (obcm == null)
+                        break;
+                    if (obcm instanceof ChatMsg) {
+                        cm = (ChatMsg) obcm;
+                        msg = String.format("[%s]\n%s", cm.UserName, cm.data);
+                    } else
+                        continue;
+                    switch (cm.code) {
+//                        case "200": // chat message
+//                            if (cm.UserName.equals(UserName))
+//                                AppendTextR(msg); // 내 메세지는 우측에
+//                            else
+//                                AppendText(msg);
+//                            break;
+//                        case "300": // Image 첨부
+//                            if (cm.UserName.equals(UserName))
+//                                AppendTextR("[" + cm.UserName + "]");
+//                            else
+//                                AppendText("[" + cm.UserName + "]");
+//                            AppendImage(cm.img);
+//                            break;
+                        case "500": // Mouse Event 수신
+                            //DoMouseEvent(cm);
+                        	//sendKeyEvent(cm);
+                            break;
+                    }
+                } catch (IOException e) {
+                    System.out.println("ois.readObject() error");
+                    try {
+//						dos.close();
+//						dis.close();
+                        ois.close();
+                        oos.close();
+                        socket.close();
+
+                        break;
+                    } catch (Exception ee) {
+                        break;
+                    } // catch문 끝
+                } // 바깥 catch문끝
+
+            }
+        }
+    }
+    
+
+    // Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수
+    public byte[] MakePacket(String msg) {
+        byte[] packet = new byte[BUF_LEN];
+        byte[] bb = null;
+        int i;
+        for (i = 0; i < BUF_LEN; i++)
+            packet[i] = 0;
+        try {
+            bb = msg.getBytes("euc-kr");
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            System.exit(0);
+        }
+        for (i = 0; i < bb.length; i++)
+            packet[i] = bb[i];
+        return packet;
+    }
+
+
+    public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
+        try {
+            oos.writeObject(ob);
+        } catch (IOException e) {
+            // textArea.append("메세지 송신 에러!!\n");
+            System.out.println("SendObject Error");
+        }
+    }
+    
+    public void sendKeyEvent(KeyEvent e) {
+		ChatMsg cm = new ChatMsg(UserName, "500", "Key");
+		cm.key_e = e;
+		SendObject(cm);
+  }
+    
 
 }
