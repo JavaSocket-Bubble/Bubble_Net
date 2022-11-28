@@ -44,6 +44,9 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class JavaGameClientView extends JFrame {
     /**
      *
@@ -51,7 +54,11 @@ public class JavaGameClientView extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField txtInput;
+    
     private String UserName;
+    private String ipAddr;
+    private String portNo;
+    
     private JButton btnSend;
     private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
     private Socket socket; // 연결소켓
@@ -71,7 +78,7 @@ public class JavaGameClientView extends JFrame {
     private FileDialog fd;
     private JButton imgBtn;
 
-    JPanel panel;
+    private JPanel panel;
     private JLabel lblMouseEvent;
     private Graphics gc;
     private int pen_size = 2; // minimum 2
@@ -80,6 +87,9 @@ public class JavaGameClientView extends JFrame {
     private Graphics gc2 = null;
 
     private final JLabel GameBackground = new JLabel("New label");
+    
+    public JavaGameClientView view;
+    public BubbleFrame game;
 
 
 
@@ -88,6 +98,7 @@ public class JavaGameClientView extends JFrame {
      * @throws BadLocationException
      */
     public JavaGameClientView(String username, String ip_addr, String port_no)  {
+    	view = this;
 //----------------메인 창 세팅
         setUndecorated(false); // 위에 창을 없애준
         setTitle("BubbleBoggle");
@@ -122,44 +133,44 @@ public class JavaGameClientView extends JFrame {
         getContentPane().add(txtInput);
         txtInput.setColumns(10);
 
-        btnSend = new JButton("Send");
-        btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
-        btnSend.setBounds(295, 489, 69, 40);
-        getContentPane().add(btnSend);
-        btnSend.setVisible(false);
+//        btnSend = new JButton("Send");
+//        btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
+//        btnSend.setBounds(295, 489, 69, 40);
+//        getContentPane().add(btnSend);
+//        btnSend.setVisible(false);
 
-        lblUserName = new JLabel("Name");
-        lblUserName.setBorder(new LineBorder(new Color(0, 0, 0)));
-        lblUserName.setBackground(Color.WHITE);
-        lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
-        lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-        lblUserName.setBounds(12, 539, 62, 40);
-        getContentPane().add(lblUserName);
-        lblUserName.setVisible(false);
+//        lblUserName = new JLabel("Name");
+//        lblUserName.setBorder(new LineBorder(new Color(0, 0, 0)));
+//        lblUserName.setBackground(Color.WHITE);
+//        lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
+//        lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
+//        lblUserName.setBounds(12, 539, 62, 40);
+//        getContentPane().add(lblUserName);
+//        lblUserName.setVisible(false);
 
         AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
         UserName = username;
-        lblUserName.setText(username);
+//        lblUserName.setText(username);
 
 
-        imgBtn = new JButton("+");
-        imgBtn.setFont(new Font("굴림", Font.PLAIN, 16));
-        imgBtn.setBounds(12, 489, 50, 40);
-        getContentPane().add(imgBtn);
-        imgBtn.setVisible(false);
-
-        JButton btnNewButton = new JButton("종 료");
-        btnNewButton.setFont(new Font("굴림", Font.PLAIN, 14));
-        btnNewButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
-                SendObject(msg);
-                System.exit(0);
-            }
-        });
-        btnNewButton.setBounds(295, 539, 69, 40);
-        getContentPane().add(btnNewButton);
-        btnNewButton.setVisible(false);
+//        imgBtn = new JButton("+");
+//        imgBtn.setFont(new Font("굴림", Font.PLAIN, 16));
+//        imgBtn.setBounds(12, 489, 50, 40);
+//        getContentPane().add(imgBtn);
+//        imgBtn.setVisible(false);
+//
+//        JButton btnNewButton = new JButton("종 료");
+//        btnNewButton.setFont(new Font("굴림", Font.PLAIN, 14));
+//        btnNewButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
+//                SendObject(msg);
+//                System.exit(0);
+//            }
+//        });
+//        btnNewButton.setBounds(295, 539, 69, 40);
+//        getContentPane().add(btnNewButton);
+//        btnNewButton.setVisible(false);
 
         panel = new JPanel();
         panel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -170,21 +181,21 @@ public class JavaGameClientView extends JFrame {
         gc = panel.getGraphics();
 
         // Image 영역 보관용. paint() 에서 이용한다.
-        panelImage = createImage(panel.getWidth(), panel.getHeight());
-        gc2 = panelImage.getGraphics();
-        gc2.setColor(panel.getBackground());
-        gc2.fillRect(0,0, panel.getWidth(),  panel.getHeight());
-        gc2.setColor(Color.BLACK);
-        gc2.drawRect(0,0, panel.getWidth()-1,  panel.getHeight()-1);
+//        panelImage = createImage(panel.getWidth(), panel.getHeight());
+//        gc2 = panelImage.getGraphics();
+//        gc2.setColor(panel.getBackground());
+//        gc2.fillRect(0,0, panel.getWidth(),  panel.getHeight());
+//        gc2.setColor(Color.BLACK);
+//        gc2.drawRect(0,0, panel.getWidth()-1,  panel.getHeight()-1);
 
-        lblMouseEvent = new JLabel("<dynamic>");
-        lblMouseEvent.setHorizontalAlignment(SwingConstants.CENTER);
-        lblMouseEvent.setFont(new Font("굴림", Font.BOLD, 14));
-        lblMouseEvent.setBorder(new LineBorder(new Color(0, 0, 0)));
-        lblMouseEvent.setBackground(Color.WHITE);
-        lblMouseEvent.setBounds(376, 539, 400, 40);
-        getContentPane().add(lblMouseEvent);
-        lblMouseEvent.setVisible(false);
+//        lblMouseEvent = new JLabel("<dynamic>");
+//        lblMouseEvent.setHorizontalAlignment(SwingConstants.CENTER);
+//        lblMouseEvent.setFont(new Font("굴림", Font.BOLD, 14));
+//        lblMouseEvent.setBorder(new LineBorder(new Color(0, 0, 0)));
+//        lblMouseEvent.setBackground(Color.WHITE);
+//        lblMouseEvent.setBounds(376, 539, 400, 40);
+//        getContentPane().add(lblMouseEvent);
+//        lblMouseEvent.setVisible(false);
 
         GameBackground.setIcon(new ImageIcon(JavaGameClientView.class.getResource("./image/startPage.png")));
         GameBackground.setBounds(0, 0, 1000, 640);
@@ -211,16 +222,16 @@ public class JavaGameClientView extends JFrame {
             ListenNetwork net = new ListenNetwork();
             net.start();
             TextSendAction action = new TextSendAction();
-            btnSend.addActionListener(action);
+            //btnSend.addActionListener(action);
             txtInput.addActionListener(action);
             txtInput.requestFocus();
-            ImageSendAction action2 = new ImageSendAction();
-            imgBtn.addActionListener(action2);
-            MyMouseEvent mouse = new MyMouseEvent();
-            panel.addMouseMotionListener(mouse);
-            panel.addMouseListener(mouse);
-            MyMouseWheelEvent wheel = new MyMouseWheelEvent();
-            panel.addMouseWheelListener(wheel);
+//            ImageSendAction action2 = new ImageSendAction();
+//            imgBtn.addActionListener(action2);
+//            MyMouseEvent mouse = new MyMouseEvent();
+//            panel.addMouseMotionListener(mouse);
+//            panel.addMouseListener(mouse);
+//            MyMouseWheelEvent wheel = new MyMouseWheelEvent();
+//            panel.addMouseWheelListener(wheel);
 
 
         } catch (NumberFormatException | IOException e) {
@@ -275,7 +286,7 @@ public class JavaGameClientView extends JFrame {
                             AppendImage(cm.img);
                             break;
                         case "500": // Mouse Event 수신
-                            DoMouseEvent(cm);
+                            //DoMouseEvent(cm);
                             break;
                     }
                 } catch (IOException e) {
@@ -297,96 +308,96 @@ public class JavaGameClientView extends JFrame {
         }
     }
 
-    // Mouse Event 수신 처리
-    public void DoMouseEvent(ChatMsg cm) {
-        Color c;
-        if (cm.UserName.matches(UserName)) // 본인 것은 이미 Local 로 그렸다.
-            return;
-        c = new Color(255, 0, 0); // 다른 사람 것은 Red
-        gc2.setColor(c);
-        gc2.fillOval(cm.mouse_e.getX() - pen_size/2, cm.mouse_e.getY() - cm.pen_size/2, cm.pen_size, cm.pen_size);
-        gc.drawImage(panelImage, 0, 0, panel);
-    }
-
-    public void SendMouseEvent(MouseEvent e) {
-        ChatMsg cm = new ChatMsg(UserName, "500", "MOUSE");
-        cm.mouse_e = e;
-        cm.pen_size = pen_size;
-        SendObject(cm);
-    }
-
-    class MyMouseWheelEvent implements MouseWheelListener {
-        @Override
-        public void mouseWheelMoved(MouseWheelEvent e) {
-            // TODO Auto-generated method stub
-            if (e.getWheelRotation() < 0) { // 위로 올리는 경우 pen_size 증가
-                if (pen_size < 20)
-                    pen_size++;
-            } else {
-                if (pen_size > 2)
-                    pen_size--;
-            }
-            lblMouseEvent.setText("mouseWheelMoved Rotation=" + e.getWheelRotation()
-                    + " pen_size = " + pen_size + " " + e.getX() + "," + e.getY());
-
-        }
-
-    }
-    // Mouse Event Handler
-    class MyMouseEvent implements MouseListener, MouseMotionListener {
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            lblMouseEvent.setText(e.getButton() + " mouseDragged " + e.getX() + "," + e.getY());// 좌표출력가능
-            Color c = new Color(0,0,255);
-            gc2.setColor(c);
-            gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
-            // panelImnage는 paint()에서 이용한다.
-            gc.drawImage(panelImage, 0, 0, panel);
-            SendMouseEvent(e);
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            lblMouseEvent.setText(e.getButton() + " mouseMoved " + e.getX() + "," + e.getY());
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            lblMouseEvent.setText(e.getButton() + " mouseClicked " + e.getX() + "," + e.getY());
-            Color c = new Color(0,0,255);
-            gc2.setColor(c);
-            gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
-            gc.drawImage(panelImage, 0, 0, panel);
-            SendMouseEvent(e);
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            lblMouseEvent.setText(e.getButton() + " mouseEntered " + e.getX() + "," + e.getY());
-            // panel.setBackground(Color.YELLOW);
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            lblMouseEvent.setText(e.getButton() + " mouseExited " + e.getX() + "," + e.getY());
-            // panel.setBackground(Color.CYAN);
-
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            lblMouseEvent.setText(e.getButton() + " mousePressed " + e.getX() + "," + e.getY());
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            lblMouseEvent.setText(e.getButton() + " mouseReleased " + e.getX() + "," + e.getY());
-            // 드래그중 멈출시 보임
-
-        }
-    }
+//    // Mouse Event 수신 처리
+//    public void DoMouseEvent(ChatMsg cm) {
+//        Color c;
+//        if (cm.UserName.matches(UserName)) // 본인 것은 이미 Local 로 그렸다.
+//            return;
+//        c = new Color(255, 0, 0); // 다른 사람 것은 Red
+//        gc2.setColor(c);
+//        gc2.fillOval(cm.mouse_e.getX() - pen_size/2, cm.mouse_e.getY() - cm.pen_size/2, cm.pen_size, cm.pen_size);
+//        gc.drawImage(panelImage, 0, 0, panel);
+//    }
+//
+//    public void SendMouseEvent(MouseEvent e) {
+//        ChatMsg cm = new ChatMsg(UserName, "500", "MOUSE");
+//        cm.mouse_e = e;
+//        cm.pen_size = pen_size;
+//        SendObject(cm);
+//    }
+//
+//    class MyMouseWheelEvent implements MouseWheelListener {
+//        @Override
+//        public void mouseWheelMoved(MouseWheelEvent e) {
+//            // TODO Auto-generated method stub
+//            if (e.getWheelRotation() < 0) { // 위로 올리는 경우 pen_size 증가
+//                if (pen_size < 20)
+//                    pen_size++;
+//            } else {
+//                if (pen_size > 2)
+//                    pen_size--;
+//            }
+//            lblMouseEvent.setText("mouseWheelMoved Rotation=" + e.getWheelRotation()
+//                    + " pen_size = " + pen_size + " " + e.getX() + "," + e.getY());
+//
+//        }
+//
+//    }
+//    // Mouse Event Handler
+//    class MyMouseEvent implements MouseListener, MouseMotionListener {
+//        @Override
+//        public void mouseDragged(MouseEvent e) {
+//            lblMouseEvent.setText(e.getButton() + " mouseDragged " + e.getX() + "," + e.getY());// 좌표출력가능
+//            Color c = new Color(0,0,255);
+//            gc2.setColor(c);
+//            gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
+//            // panelImnage는 paint()에서 이용한다.
+//            gc.drawImage(panelImage, 0, 0, panel);
+//            SendMouseEvent(e);
+//        }
+//
+//        @Override
+//        public void mouseMoved(MouseEvent e) {
+//            lblMouseEvent.setText(e.getButton() + " mouseMoved " + e.getX() + "," + e.getY());
+//        }
+//
+//        @Override
+//        public void mouseClicked(MouseEvent e) {
+//            lblMouseEvent.setText(e.getButton() + " mouseClicked " + e.getX() + "," + e.getY());
+//            Color c = new Color(0,0,255);
+//            gc2.setColor(c);
+//            gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
+//            gc.drawImage(panelImage, 0, 0, panel);
+//            SendMouseEvent(e);
+//        }
+//
+//        @Override
+//        public void mouseEntered(MouseEvent e) {
+//            lblMouseEvent.setText(e.getButton() + " mouseEntered " + e.getX() + "," + e.getY());
+//            // panel.setBackground(Color.YELLOW);
+//
+//        }
+//
+//        @Override
+//        public void mouseExited(MouseEvent e) {
+//            lblMouseEvent.setText(e.getButton() + " mouseExited " + e.getX() + "," + e.getY());
+//            // panel.setBackground(Color.CYAN);
+//
+//        }
+//
+//        @Override
+//        public void mousePressed(MouseEvent e) {
+//            lblMouseEvent.setText(e.getButton() + " mousePressed " + e.getX() + "," + e.getY());
+//
+//        }
+//
+//        @Override
+//        public void mouseReleased(MouseEvent e) {
+//            lblMouseEvent.setText(e.getButton() + " mouseReleased " + e.getX() + "," + e.getY());
+//            // 드래그중 멈출시 보임
+//
+//        }
+//    }
 
     // keyboard enter key 치면 서버로 전송
     class TextSendAction implements ActionListener {
@@ -579,9 +590,10 @@ public class JavaGameClientView extends JFrame {
             @Override
             //키보드 클릭 핸들러 이벤트
             public void keyPressed(KeyEvent e) {
-                //new waitingRoom();
-                new BubbleFrame();
+            	game = new BubbleFrame(UserName, view);
                 setVisible(false);
+                ChatMsg msg = new ChatMsg(UserName, "200", "Ready");
+                SendObject(msg);
             }
         });
     }
