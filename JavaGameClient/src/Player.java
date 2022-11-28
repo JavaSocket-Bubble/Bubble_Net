@@ -3,6 +3,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +14,11 @@ import java.util.List;
 
 //class Player => new 가능한 애들!! 게임에 존재할 수 존재할 수 있음.(추상메소드를 가질 수 없다)
 public class Player extends JLabel implements Moveable {
-
+	private static final long serialVersionUID = 1L;
+	
+	private ObjectInputStream ois;
+    private ObjectOutputStream oos;
+    
     private BubbleFrame mContext;
     private List<Bubble> bubbleList;
 
@@ -106,6 +113,7 @@ public class Player extends JLabel implements Moveable {
                 setLocation(x, y);
                 try { //sleep 안하면 너무 빨라서 우리 눈에 훅 하고 지나감
                     Thread.sleep(10);//0.01초
+                    
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
