@@ -99,6 +99,10 @@ public class JavaGameClientView extends JFrame {
      */
     public JavaGameClientView(String username, String ip_addr, String port_no)  {
     	view = this;
+    	 UserName = username;
+    	 ipAddr = ip_addr;
+    	 portNo = port_no;
+    	 
 //----------------메인 창 세팅
         setUndecorated(false); // 위에 창을 없애준
         setTitle("BubbleBoggle");
@@ -591,6 +595,7 @@ public class JavaGameClientView extends JFrame {
             //키보드 클릭 핸들러 이벤트
             public void keyPressed(KeyEvent e) {
 //            	game = new BubbleFrame(UserName, view);
+            
             	game = new BubbleFrame(UserName, ipAddr, portNo);
                 setVisible(false);
                 ChatMsg msg = new ChatMsg(UserName, "200", "Ready");

@@ -60,9 +60,11 @@ public class BubbleFrame extends JFrame {
     private List<Enemy> enemyList; //컬렉션으로 관리
 
     public BubbleFrame(String username, String ip_addr, String port_no) {
+    	System.out.println();
     	UserName = username;
     	try {
     		socket = new Socket(ip_addr, Integer.parseInt(port_no));
+    		System.out.println(socket);
         	oos2 = new ObjectOutputStream(socket.getOutputStream());
             oos2.flush();
             ois = new ObjectInputStream(socket.getInputStream());
