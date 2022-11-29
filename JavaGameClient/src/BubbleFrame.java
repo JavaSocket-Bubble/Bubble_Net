@@ -68,6 +68,7 @@ public class BubbleFrame extends JFrame {
             ois = new ObjectInputStream(socket.getInputStream());
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("오류인가 요기가");
 		}
     	//JavaGameClientView client = new JavaGameClientView(username, ip_addr, port_no);
     	      
