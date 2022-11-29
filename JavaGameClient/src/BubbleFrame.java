@@ -64,13 +64,12 @@ public class BubbleFrame extends JFrame {
     	UserName = username;
     	try {
     		socket = new Socket(ip_addr, Integer.parseInt(port_no));
-    		System.out.println(socket);
         	oos2 = new ObjectOutputStream(socket.getOutputStream());
             oos2.flush();
             ois = new ObjectInputStream(socket.getInputStream());
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("오류인가 요기가");
+			
 		}
     	//JavaGameClientView client = new JavaGameClientView(username, ip_addr, port_no);
     	      
@@ -116,14 +115,14 @@ public class BubbleFrame extends JFrame {
                         //left가 private boolean이므로 게터 사용시 is라고 해야함.
                         if(!player.isLeft() && !player.isLeftWallCrash()) {
                             player.left();
-                            //sendObject();
+                            ChatMsg msg = new ChatMsg(UserName, "300", "left");
+                            SendObject(msg);
                         }
                         break;
                     case KeyEvent.VK_RIGHT:
                         if(!player.isRight() && !player.isRightWallCrash()) {
                             player.right();
                             ChatMsg msg = new ChatMsg(UserName, "300", "right");
-                            System.out.println(msg);
                             SendObject(msg);
                             
                         }
@@ -131,12 +130,16 @@ public class BubbleFrame extends JFrame {
                     case KeyEvent.VK_UP:
                         if(!player.isUp() && !player.isDown()) {
                             player.up();
+                            ChatMsg msg = new ChatMsg(UserName, "300", "up");
+                            SendObject(msg);
                         }
                         break;
                     case KeyEvent.VK_SPACE:
                         //Bubble bubble = new Bubble(mContext);
                         //add(bubble);
                         player.attack();
+                        ChatMsg msg = new ChatMsg(UserName, "300", "bubble");
+                        SendObject(msg);
                         break;
                 }
 
