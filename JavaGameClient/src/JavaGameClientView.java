@@ -590,7 +590,8 @@ public class JavaGameClientView extends JFrame {
             @Override
             //키보드 클릭 핸들러 이벤트
             public void keyPressed(KeyEvent e) {
-            	game = new BubbleFrame(UserName, view);
+//            	game = new BubbleFrame(UserName, view);
+            	game = new BubbleFrame(UserName, ipAddr, portNo);
                 setVisible(false);
                 ChatMsg msg = new ChatMsg(UserName, "200", "Ready");
                 SendObject(msg);

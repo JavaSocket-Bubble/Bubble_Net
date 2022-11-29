@@ -139,8 +139,8 @@ public class JavaGameServer extends JFrame {
 
     public void AppendObject(ChatMsg msg) {
         // textArea.append("사용자로부터 들어온 object : " + str+"\n");
-        textArea.append("code = " + msg.code + "\n");
-        textArea.append("id = " + msg.UserName + "\n");
+        textArea.append("code = " + msg.code + " ");
+        textArea.append("id = " + msg.UserName + " ");
         textArea.append("data = " + msg.data + "\n");
         textArea.setCaretPosition(textArea.getText().length());
     }
@@ -406,7 +406,11 @@ public class JavaGameServer extends JFrame {
                             //WriteAll(msg + "\n"); // Write All
                             WriteAllObject(cm);
                         }
-                    } else if (cm.code.matches("400")) { // logout message 처리
+                    } else if (cm.code.matches("300")) {
+                    	msg = String.format("[%s] %s", cm.UserName, cm.data);
+						AppendText(msg);
+					} 
+                    else if (cm.code.matches("400")) { // logout message 처리
                         Logout();
                         break;
                     } else { // 300, 500, ... 기타 object는 모두 방송한다.
