@@ -58,19 +58,15 @@ public class BubbleFrame extends JFrame {
     private BubbleFrame mContext = this;
     //private Enemy enemy;
     private List<Enemy> enemyList; //컬렉션으로 관리
+    
+    public JavaGameClientView view;
 
-    public BubbleFrame(String username, String ip_addr, String port_no) {
+    
+    public BubbleFrame(String username, JavaGameClientView client_view) {
     	System.out.println();
     	UserName = username;
-    	try {
-    		socket = new Socket(ip_addr, Integer.parseInt(port_no));
-        	oos2 = new ObjectOutputStream(socket.getOutputStream());
-            oos2.flush();
-            ois = new ObjectInputStream(socket.getInputStream());
-		} catch (Exception e) {
-			// TODO: handle exception
-			
-		}
+    	view = client_view;
+    	
     	//JavaGameClientView client = new JavaGameClientView(username, ip_addr, port_no);
     	      
         initObject();
@@ -116,14 +112,14 @@ public class BubbleFrame extends JFrame {
                         if(!player.isLeft() && !player.isLeftWallCrash()) {
                             player.left();
                             ChatMsg msg = new ChatMsg(UserName, "300", "left");
-                            SendObject(msg);
+                            view.SendObject(msg);
                         }
                         break;
                     case KeyEvent.VK_RIGHT:
                         if(!player.isRight() && !player.isRightWallCrash()) {
                             player.right();
                             ChatMsg msg = new ChatMsg(UserName, "300", "right");
-                            SendObject(msg);
+                            view.SendObject(msg);
                             
                         }
                         break;
@@ -131,7 +127,7 @@ public class BubbleFrame extends JFrame {
                         if(!player.isUp() && !player.isDown()) {
                             player.up();
                             ChatMsg msg = new ChatMsg(UserName, "300", "up");
-                            SendObject(msg);
+                            view.SendObject(msg);
                         }
                         break;
                     case KeyEvent.VK_SPACE:
@@ -139,7 +135,7 @@ public class BubbleFrame extends JFrame {
                         //add(bubble);
                         player.attack();
                         ChatMsg msg = new ChatMsg(UserName, "300", "bubble");
-                        SendObject(msg);
+                        view.SendObject(msg);
                         break;
                 }
 
@@ -190,16 +186,7 @@ public class BubbleFrame extends JFrame {
     }
 
     
-    //jyjyjyjy
-    public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
-        try {
-            oos2.writeObject(ob);
-        } catch (IOException e) {
-            // textArea.append("메세지 송신 에러!!\n");
-//            AppendText("SendObject Error");
-        	System.out.println("SendObject Error");
-        }
-    }
+   
     
     
     
