@@ -97,7 +97,7 @@ public class JavaGameClientView extends JFrame {
     //public Player player = new Player(game, UserName, view);
     public Player player;
     public BubbleFrame mContext;
-    private boolean IsReady = false;
+    public boolean IsReady = false;
     
     /**
      * Create the frame.
@@ -293,59 +293,6 @@ public class JavaGameClientView extends JFrame {
                         	game.doKeyPressed(cm);
                         	game.doKeyReleased(cm);
                         	break;
-                        	/*if(cm.data.equals("right")) {
-                        		if(!cm.UserName.equals(UserName)) {
-                        			if(!game.player2.isRight() && !game.player2.isRightWallCrash()) {
-                        				game.player2.right();
-                                    }
-                            		//game.player2.right();
-                            	}
-                        		else {
-                        			if(!game.player.isRight() && !game.player.isRightWallCrash()) {
-                                        game.player.right();
-                                        //x = player.getX();
-                                        //System.out.println(x);
-//                                        ChatMsg msg = new ChatMsg(UserName, "300", "right");
-//                                        view.SendObject(msg);
-                                        //System.out.println("여긴가?");
-                                    }
-									//player.right();
-									
-								}
-                        	}
-                        	else if(cm.data.equals("left")) {
-                        		if(!cm.UserName.equals(UserName)) {
-//                        			if(!player2.isLeft() && !player2.isLeftWallCrash()) {
-//                                        player2.left();
-//                                    }
-                            		//player2.left();
-                            	}
-                        		else {
-                        			if(!player.isLeft() && !player.isLeftWallCrash()) {
-                                        //player.left();
-//                                        ChatMsg msg = new ChatMsg(UserName, "300", "left");
-//                                        view.SendObject(msg);
-                                        //keyPressed(e);
-                                    }
-//									player.left();
-								}
-                        	}
-                        	
-                        	//x = cm.getX();
-                        	//System.out.println(cm.getX());
-//                            if (!cm.UserName.equals(UserName)) {
-//                            	//player.x = cm.getX();
-//                            	System.out.println(x);
-//                            }
-//                            else {
-//                            	//x = cm.getX();
-//                            	//player.x = cm.getX();
-//                            	//System.out.println(x);
-                        	break;
-                            }*/
-                            	
-//                            	cm.getX();//AppendText("[" + cm.UserName + "]");
-//                            //AppendImage(cm.img);
                             
                         case "500": // Mouse Event 수신
                             //DoMouseEvent(cm);
@@ -353,9 +300,9 @@ public class JavaGameClientView extends JFrame {
                             
                         case "800":
                         	System.out.println("되냐2");
-                        	//IsReady = true;
+                        	IsReady = true;
                         	
-                        	//game = new BubbleFrame(UserName, view);
+                        	game = new BubbleFrame(UserName, view);
                         	break;
                     }
                 } catch (IOException e) {
@@ -659,13 +606,11 @@ public class JavaGameClientView extends JFrame {
             @Override
             //키보드 클릭 핸들러 이벤트
             public void keyPressed(KeyEvent e) {
-//            	ChatMsg msg = new ChatMsg(UserName, "800", "Ready");
-//            	IsReady = true;
-//            	msg.IsReady = IsReady;
-//                SendObject(msg);
-//                System.out.println("되냐4");
+            	ChatMsg msg = new ChatMsg(UserName, "800", "Ready");            	
+                //SendObject(msg);
+                
 //            	//waiting이미지 띄우기
-//            	GameBackground.setIcon(new ImageIcon(JavaGameClientView.class.getResource("./image/backgroundMapService.png")));
+            	//GameBackground.setIcon(new ImageIcon(JavaGameClientView.class.getResource("./image/backgroundMapService.png")));
 //            	//game = new BubbleFrame(UserName, view);
 //            	
 //            	//game = new BubbleFrame(UserName, ipAddr, portNo);
@@ -676,6 +621,10 @@ public class JavaGameClientView extends JFrame {
             	
             	game = new BubbleFrame(UserName, view);
             	setVisible(false);
+            	
+//            	if(IsReady==true) {
+//            		setVisible(false);
+//            	}
             }
         });
     }

@@ -78,31 +78,34 @@ public class BubbleFrame extends JFrame {
     }
 
     public void doKeyPressed(ChatMsg cm) {
-    	if(cm.data.equals("right")) {
+    	if(cm.data.equals("left")) {
     		if(!cm.UserName.equals(UserName)) {
-//    			if(!player2.isRight() && !player2.isRightWallCrash()) {
-//    				player2.right();
-//                }
+        		player2.left();
+        	}
+    		else {
+				player.left();
+			}
+    	}
+    	else if(cm.data.equals("right")) {
+    		if(!cm.UserName.equals(UserName)) {
         		player2.right();
         	}
     		else {
-//    			if(!player.isRight() && !player.isRightWallCrash()) {
-//                    player.right();
-//                    //x = player.getX();
-//                    //System.out.println(x);
-////                    ChatMsg msg = new ChatMsg(UserName, "300", "right");
-////                    view.SendObject(msg);
-//                    //System.out.println("여긴가?");
-//                }
 				player.right();
-				
 			}
     	}
 
     }
     
     public void doKeyReleased(ChatMsg cm) {
-    	if(cm.data.equals("right-released")) {
+    	if(cm.data.equals("left-released")) {
+    		if(!cm.UserName.equals(UserName))
+    			player2.setLeft(false);
+    		else {
+    			player.setLeft(false);
+    		}
+    	}
+    	else if(cm.data.equals("right-released")) {
     		if(!cm.UserName.equals(UserName))
     			player2.setRight(false);
     		else {
@@ -123,10 +126,10 @@ public class BubbleFrame extends JFrame {
 //        enemy = new Enemy(mContext);
 //        add(enemy);
         
-//        enemyList = new ArrayList<>();
-//        enemyList.add(new Enemy(mContext, EnemyWay.RIGHT));
-//        enemyList.add(new Enemy(mContext, EnemyWay.LEFT));
-//        for(Enemy e : enemyList) add(e);
+        enemyList = new ArrayList<>();
+        enemyList.add(new Enemy(mContext, EnemyWay.RIGHT));
+        enemyList.add(new Enemy(mContext, EnemyWay.LEFT));
+        for(Enemy e : enemyList) add(e);
         //new BGM();
     }
 
@@ -136,22 +139,7 @@ public class BubbleFrame extends JFrame {
         setLocationRelativeTo(null); //JFrame 가운데 배치하기
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //x버튼으로 창을 끌 때 JVM같이 종료
     }
-    
-//    public void keyPressed(KeyEvent e) {
-//    	int code = e.getKeyCode();
-//    	send_key(e, "KEYRIGHT");
-//    }
-//    public void send_key(KeyEvent e, String pressed) {
-//    	String str;
-//    	str = String.format("%04d %s %d", e.getKeyCode(), pressed, 300);
-//    	str = String.format("%-40s", str);
-//    	send_Server(str);
-//    }
-//    
-//	public void send_Server(String str) {
-////    	ChatMsg msg = new ChatMsg(UserName, "300", "bubble");
-//       // view.SendObject(str);
-//    }
+
 
     public void initListener() {
         addKeyListener(new KeyAdapter() {
@@ -223,12 +211,14 @@ public class BubbleFrame extends JFrame {
             public void keyReleased(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
-                        player.setLeft(false);
+                        //player.setLeft(false);
+                    	ChatMsg msg = new ChatMsg(UserName, "300", "left-released");
+                        view.SendObject(msg);  
                         break;
                     case KeyEvent.VK_RIGHT: 
                     	//player.setRight(false);
-                    	ChatMsg msg = new ChatMsg(UserName, "300", "right-released");
-                        view.SendObject(msg);                        
+                    	ChatMsg msg2 = new ChatMsg(UserName, "300", "right-released");
+                        view.SendObject(msg2);                        
                         break;
                 }
 

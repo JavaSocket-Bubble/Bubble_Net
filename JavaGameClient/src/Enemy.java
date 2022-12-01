@@ -31,7 +31,7 @@ public class Enemy extends JLabel implements Moveable {
 
 
     //적군 속도 상태(고정이므로 상수)
-    private final int SPEED = 3;
+    private final int SPEED = 1;
     private final int JUMPSPEED = 1; //up, down
 
     private ImageIcon enemyR, enemyL;
