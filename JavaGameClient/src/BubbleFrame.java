@@ -94,6 +94,15 @@ public class BubbleFrame extends JFrame {
 				player.right();
 			}
     	}
+    	else if(cm.data.equals("up")) {
+    		if(!cm.UserName.equals(UserName)) {
+        		player2.up();
+        	}
+    		else {
+				player.up();
+			}
+    	}
+    	
 
     }
     
@@ -126,10 +135,11 @@ public class BubbleFrame extends JFrame {
 //        enemy = new Enemy(mContext);
 //        add(enemy);
         
-        enemyList = new ArrayList<>();
-        enemyList.add(new Enemy(mContext, EnemyWay.RIGHT));
-        enemyList.add(new Enemy(mContext, EnemyWay.LEFT));
-        for(Enemy e : enemyList) add(e);
+//        enemyList = new ArrayList<>();
+//        enemyList.add(new Enemy(mContext, EnemyWay.RIGHT));
+//        enemyList.add(new Enemy(mContext, EnemyWay.LEFT));
+//        for(Enemy e : enemyList) add(e);
+        
         //new BGM();
     }
 
@@ -170,7 +180,7 @@ public class BubbleFrame extends JFrame {
                         break;
                     case KeyEvent.VK_UP:
                         if(!player.isUp() && !player.isDown()) {
-                            player.up();
+                            //player.up();
                             ChatMsg msg = new ChatMsg(UserName, "300", "up");
                             view.SendObject(msg);
                         }
