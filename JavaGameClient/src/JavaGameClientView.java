@@ -90,19 +90,26 @@ public class JavaGameClientView extends JFrame {
     
     public JavaGameClientView view;
     public BubbleFrame game;
-
-
-
+    public int x;
+    
+    //public Player player;
+    public Player2 player2;
+    //public Player player = new Player(game, UserName, view);
+    public Player player;
+    public BubbleFrame mContext;
+    private boolean IsReady = false;
+    
     /**
      * Create the frame.
      * @throws BadLocationException
      */
     public JavaGameClientView(String username, String ip_addr, String port_no)  {
-    	view = this;
-    	 UserName = username;
-    	 ipAddr = ip_addr;
-    	 portNo = port_no;
-    	 
+    	 view = this;
+		 UserName = username;
+		 ipAddr = ip_addr;
+		 portNo = port_no;
+		 player = new Player(mContext, username, view);
+		 player2 = new Player2(mContext);
 //----------------메인 창 세팅
         setUndecorated(false); // 위에 창을 없애준
         setTitle("BubbleBoggle");
@@ -282,16 +289,74 @@ public class JavaGameClientView extends JFrame {
                             else
                                 AppendText(msg);
                             break;
-                        case "300": // Image 첨부
-                            if (cm.UserName.equals(UserName))
-                                AppendTextR("[" + cm.UserName + "]");
-                            else
-                                AppendText("[" + cm.UserName + "]");
-                            AppendImage(cm.img);
-                            break;
+                        case "300": 
+                        	game.doKeyPressed(cm);
+                        	game.doKeyReleased(cm);
+                        	break;
+                        	/*if(cm.data.equals("right")) {
+                        		if(!cm.UserName.equals(UserName)) {
+                        			if(!game.player2.isRight() && !game.player2.isRightWallCrash()) {
+                        				game.player2.right();
+                                    }
+                            		//game.player2.right();
+                            	}
+                        		else {
+                        			if(!game.player.isRight() && !game.player.isRightWallCrash()) {
+                                        game.player.right();
+                                        //x = player.getX();
+                                        //System.out.println(x);
+//                                        ChatMsg msg = new ChatMsg(UserName, "300", "right");
+//                                        view.SendObject(msg);
+                                        //System.out.println("여긴가?");
+                                    }
+									//player.right();
+									
+								}
+                        	}
+                        	else if(cm.data.equals("left")) {
+                        		if(!cm.UserName.equals(UserName)) {
+//                        			if(!player2.isLeft() && !player2.isLeftWallCrash()) {
+//                                        player2.left();
+//                                    }
+                            		//player2.left();
+                            	}
+                        		else {
+                        			if(!player.isLeft() && !player.isLeftWallCrash()) {
+                                        //player.left();
+//                                        ChatMsg msg = new ChatMsg(UserName, "300", "left");
+//                                        view.SendObject(msg);
+                                        //keyPressed(e);
+                                    }
+//									player.left();
+								}
+                        	}
+                        	
+                        	//x = cm.getX();
+                        	//System.out.println(cm.getX());
+//                            if (!cm.UserName.equals(UserName)) {
+//                            	//player.x = cm.getX();
+//                            	System.out.println(x);
+//                            }
+//                            else {
+//                            	//x = cm.getX();
+//                            	//player.x = cm.getX();
+//                            	//System.out.println(x);
+                        	break;
+                            }*/
+                            	
+//                            	cm.getX();//AppendText("[" + cm.UserName + "]");
+//                            //AppendImage(cm.img);
+                            
                         case "500": // Mouse Event 수신
                             //DoMouseEvent(cm);
                             break;
+                            
+                        case "800":
+                        	System.out.println("되냐2");
+                        	//IsReady = true;
+                        	
+                        	//game = new BubbleFrame(UserName, view);
+                        	break;
                     }
                 } catch (IOException e) {
                     AppendText("ois.readObject() error");
@@ -594,12 +659,23 @@ public class JavaGameClientView extends JFrame {
             @Override
             //키보드 클릭 핸들러 이벤트
             public void keyPressed(KeyEvent e) {
+//            	ChatMsg msg = new ChatMsg(UserName, "800", "Ready");
+//            	IsReady = true;
+//            	msg.IsReady = IsReady;
+//                SendObject(msg);
+//                System.out.println("되냐4");
+//            	//waiting이미지 띄우기
+//            	GameBackground.setIcon(new ImageIcon(JavaGameClientView.class.getResource("./image/backgroundMapService.png")));
+//            	//game = new BubbleFrame(UserName, view);
+//            	
+//            	//game = new BubbleFrame(UserName, ipAddr, portNo);
+//                if(IsReady==true) {
+//                	System.out.println("되냐3");
+//                	setVisible(false);
+//                }
+            	
             	game = new BubbleFrame(UserName, view);
-            
-            	//game = new BubbleFrame(UserName, ipAddr, portNo);
-                setVisible(false);
-                ChatMsg msg = new ChatMsg(UserName, "200", "Ready");
-                SendObject(msg);
+            	setVisible(false);
             }
         });
     }

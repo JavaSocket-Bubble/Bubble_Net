@@ -48,8 +48,16 @@ public class Player extends JLabel implements Moveable {
 
     private ImageIcon playerR, playerL, playerRdie, playerLdie;
 
-    public Player(BubbleFrame mContext) {
+    public JavaGameClientView view;
+    private String UserName;
+    
+    
+    public Player(BubbleFrame mContext, String username, JavaGameClientView client_view) {
+    	
         this.mContext = mContext;
+        UserName = username;
+    	view = client_view;
+        
         initObject();
         initSetting();
         initBackgroundPlayerService();
@@ -109,8 +117,14 @@ public class Player extends JLabel implements Moveable {
         new Thread(() -> { //runnable과 동일(람다식)
             while (left && getState() == 0) { // 스레드 종료(while없으면 계속 생성종료반복으로 낭비심함)
                 setIcon(playerL);
+                
                 x = x - SPEED;
+                
+//                ChatMsg msg = new ChatMsg(UserName, "500", "x");
+//                view.SendObject(msg);
+                
                 setLocation(x, y);
+                
                 try { //sleep 안하면 너무 빨라서 우리 눈에 훅 하고 지나감
                     Thread.sleep(10);//0.01초
                     
@@ -137,9 +151,20 @@ public class Player extends JLabel implements Moveable {
         new Thread(() -> { //runnable과 동일(람다식)
             while (right && getState() == 0) {
                 setIcon(playerR);
+                //System.out.println("right");
+                //x = view.x;
                 x = x + SPEED;
+                //server_x = server_x + SPEED;
                 setLocation(x, y);
+                //System.out.println("right");
+                //msg.setX(x);
+//                ChatMsg msg = new ChatMsg(UserName, "300", "right");
+//                msg.setX(x);
+//                view.SendObject(msg);
+                //System.out.println(server_x + ", " + y);
                 try {
+                	//System.out.println(x + ", " + y);
+
                     Thread.sleep(10);//0.01초
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);

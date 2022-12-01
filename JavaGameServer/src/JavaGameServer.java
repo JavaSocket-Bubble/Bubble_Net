@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.image.ComponentColorModel;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -42,6 +43,9 @@ public class JavaGameServer extends JFrame {
     private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
     private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 
+    public int x;
+
+    
     /**
      * Launch the application.
      */
@@ -160,7 +164,9 @@ public class JavaGameServer extends JFrame {
         private Vector user_vc;
         public String UserName = "";
         public String UserStatus;
-
+        private Vector room = new Vector();
+        public boolean IsReady;
+        
         public UserService(Socket client_socket) {
             // TODO Auto-generated constructor stub
             // 매개변수로 넘어온 자료 저장
@@ -409,11 +415,39 @@ public class JavaGameServer extends JFrame {
                     } else if (cm.code.matches("300")) {
                     	msg = String.format("[%s] %s", cm.UserName, cm.data);
 						AppendText(msg);
+						//x = cm.getX();
+						//System.out.println(x);
+						WriteAllObject(cm);
+						
 					} 
+                    else if (cm.code.matches("500")) {
+                    	msg = String.format("[%s] %s", cm.UserName, cm.data);
+						AppendText(msg);
+                    }
                     else if (cm.code.matches("400")) { // logout message 처리
                         Logout();
                         break;
-                    } else { // 300, 500, ... 기타 object는 모두 방송한다.
+                    } else if (cm.code.matches("800")) { // ready
+//                        room.add(this);
+                    	IsReady = cm.IsReady;
+                    	for (int i = 0; i < user_vc.size(); i++) {
+                            UserService user = (UserService) user_vc.elementAt(i);
+                            if (user.IsReady == true) {
+                            	ChatMsg obcm2 = new ChatMsg(msg, "800", msg);
+                            	WriteOneObject(obcm2);
+                            	System.out.println("서버에서 받음");
+                            }
+                                //user.WriteOne("준비완료");
+                        }
+                        System.out.println(room.size());
+//                        if(user_vc.size()==2) {
+//                        	System.out.println("되냐;;1");
+//                        	ChatMsg obcm2 = new ChatMsg("귓속말", "800", "준비완료");
+//                            WriteAllObject(obcm2);
+//                        }
+                        break;
+                    }
+                    else { // 300, 500, ... 기타 object는 모두 방송한다.
                         WriteAllObject(cm);
                     }
                 } catch (IOException e) {
