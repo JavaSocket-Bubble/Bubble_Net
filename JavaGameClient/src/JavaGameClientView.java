@@ -248,7 +248,11 @@ public class JavaGameClientView extends JFrame {
                         	if(cm.UserName.equals("2Players")) {
                         		game = new BubbleFrame(UserName, view);
                         		game.requestFocus();
-                        		view.setVisible(false);
+
+
+                        		setVisible(false);
+                        		
+
                         		break;
                         	}
                         	break;
@@ -549,13 +553,40 @@ public class JavaGameClientView extends JFrame {
         }
     }
 
+    public void click() {
+    	ChatMsg msg = new ChatMsg(UserName, "800", "Ready");            	
+        SendObject(msg);
+        
+    }
     public void initListener() {
         addKeyListener(new KeyAdapter() {
             @Override
             //키보드 클릭 핸들러 이벤트
             public void keyPressed(KeyEvent e) {
+
             	ChatMsg msg = new ChatMsg(UserName, "800", "Ready");            	
                 SendObject(msg);
+
+
+            	//click();
+//            	//waiting이미지 띄우기
+            	//GameBackground.setIcon(new ImageIcon(JavaGameClientView.class.getResource("./image/backgroundMapService.png")));
+//            	//game = new BubbleFrame(UserName, view);
+//            	
+//            	//game = new BubbleFrame(UserName, ipAddr, portNo);
+//                if(IsReady==true) {
+//                	System.out.println("되냐3");
+//                	setVisible(false);
+//                }
+            	
+//            	game = new BubbleFrame(UserName, view);
+//            	setVisible(false);
+            	
+//            	if(IsReady==true) {
+//            		setVisible(false);
+//            	}
+            	
+
             }
         });
     }
