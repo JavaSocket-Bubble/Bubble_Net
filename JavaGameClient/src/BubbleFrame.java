@@ -102,7 +102,14 @@ public class BubbleFrame extends JFrame {
 				player.up();
 			}
     	}
-    	
+//    	else if(cm.data.equals("bubble")) {
+//    		if(!cm.UserName.equals(UserName)) {
+//        		player2.attack();
+//        	}
+//    		else {
+//				player.attack();
+//			}
+//    	}
 
     }
     
@@ -135,10 +142,10 @@ public class BubbleFrame extends JFrame {
 //        enemy = new Enemy(mContext);
 //        add(enemy);
         
-//        enemyList = new ArrayList<>();
-//        enemyList.add(new Enemy(mContext, EnemyWay.RIGHT));
-//        enemyList.add(new Enemy(mContext, EnemyWay.LEFT));
-//        for(Enemy e : enemyList) add(e);
+        enemyList = new ArrayList<>();
+        enemyList.add(new Enemy(mContext, EnemyWay.RIGHT));
+        enemyList.add(new Enemy(mContext, EnemyWay.LEFT));
+        for(Enemy e : enemyList) add(e);
         
         //new BGM();
     }
@@ -146,7 +153,8 @@ public class BubbleFrame extends JFrame {
     public void initSetting() {
         setSize(1000, 640);
         setLayout(null); //absoulte 레이아웃(자유롭게 그림을 그릴 수 있다.
-        setLocationRelativeTo(null); //JFrame 가운데 배치하기
+        //setLocationRelativeTo(null); //JFrame 가운데 배치하기
+        setLocation(0, 0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //x버튼으로 창을 끌 때 JVM같이 종료
     }
 

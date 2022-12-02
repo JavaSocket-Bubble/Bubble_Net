@@ -48,7 +48,7 @@ public class BackgroundPlayerService2 implements Runnable{
 //                    }
 //                }
 //            }
-
+ 
 
             // 2. 벽 충돌 체크
             //플레이어에 위치에 따른 색상확인(캐릭터의 좌상단이 0,0)

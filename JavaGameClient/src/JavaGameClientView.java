@@ -299,10 +299,13 @@ public class JavaGameClientView extends JFrame {
                             break;
                             
                         case "800":
-                        	System.out.println("되냐2");
-                        	IsReady = true;
-                        	
-                        	game = new BubbleFrame(UserName, view);
+//                        	System.out.println("되냐2");
+//                        	IsReady = true;
+                        	if(cm.UserName.equals("Server")) {
+                        		game = new BubbleFrame(UserName, view);
+                        		setVisible(false);
+                        	}
+//                        	game = new BubbleFrame(UserName, view);
                         	break;
                     }
                 } catch (IOException e) {
@@ -607,7 +610,7 @@ public class JavaGameClientView extends JFrame {
             //키보드 클릭 핸들러 이벤트
             public void keyPressed(KeyEvent e) {
             	ChatMsg msg = new ChatMsg(UserName, "800", "Ready");            	
-                //SendObject(msg);
+                SendObject(msg);
                 
 //            	//waiting이미지 띄우기
             	//GameBackground.setIcon(new ImageIcon(JavaGameClientView.class.getResource("./image/backgroundMapService.png")));
@@ -619,8 +622,8 @@ public class JavaGameClientView extends JFrame {
 //                	setVisible(false);
 //                }
             	
-            	game = new BubbleFrame(UserName, view);
-            	setVisible(false);
+//            	game = new BubbleFrame(UserName, view);
+//            	setVisible(false);
             	
 //            	if(IsReady==true) {
 //            		setVisible(false);
