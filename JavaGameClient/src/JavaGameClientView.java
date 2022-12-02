@@ -301,7 +301,7 @@ public class JavaGameClientView extends JFrame {
                         case "800":
 //                        	System.out.println("되냐2");
 //                        	IsReady = true;
-                        	if(cm.UserName.equals("Server")) {
+                        	if(cm.UserName.equals("2Players")) {
                         		game = new BubbleFrame(UserName, view);
                         		setVisible(false);
                         	}

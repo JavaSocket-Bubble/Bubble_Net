@@ -449,7 +449,7 @@ public class JavaGameServer extends JFrame {
                     	msg = String.format("[%s] %s %s", cm.UserName, cm.code, cm.data);
 						AppendText(msg);
                     	if(user_vc.size() == 2) {
-                    		ChatMsg obcm2 = new ChatMsg("Server", "800", msg);
+                    		ChatMsg obcm2 = new ChatMsg("2Players", "800", msg);
                     		WriteAllObject(obcm2);
                     	}
                         break;
