@@ -161,6 +161,27 @@ public class JavaGameClientView extends JFrame {
 
         AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
         UserName = username;
+//        lblUserName.setText(username);
+
+
+//        imgBtn = new JButton("+");
+//        imgBtn.setFont(new Font("굴림", Font.PLAIN, 16));
+//        imgBtn.setBounds(12, 489, 50, 40);
+//        getContentPane().add(imgBtn);
+//        imgBtn.setVisible(false);
+//
+//        JButton btnNewButton = new JButton("종 료");
+//        btnNewButton.setFont(new Font("굴림", Font.PLAIN, 14));
+//        btnNewButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
+//                SendObject(msg);
+//                System.exit(0);
+//            }
+//        });
+//        btnNewButton.setBounds(295, 539, 69, 40);
+//        getContentPane().add(btnNewButton);
+//        btnNewButton.setVisible(false);
 
         panel = new JPanel();
         panel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -169,6 +190,23 @@ public class JavaGameClientView extends JFrame {
         //getContentPane().add(panel);
         panel.setVisible(false);
         gc = panel.getGraphics();
+
+        // Image 영역 보관용. paint() 에서 이용한다.
+//        panelImage = createImage(panel.getWidth(), panel.getHeight());
+//        gc2 = panelImage.getGraphics();
+//        gc2.setColor(panel.getBackground());
+//        gc2.fillRect(0,0, panel.getWidth(),  panel.getHeight());
+//        gc2.setColor(Color.BLACK);
+//        gc2.drawRect(0,0, panel.getWidth()-1,  panel.getHeight()-1);
+
+//        lblMouseEvent = new JLabel("<dynamic>");
+//        lblMouseEvent.setHorizontalAlignment(SwingConstants.CENTER);
+//        lblMouseEvent.setFont(new Font("굴림", Font.BOLD, 14));
+//        lblMouseEvent.setBorder(new LineBorder(new Color(0, 0, 0)));
+//        lblMouseEvent.setBackground(Color.WHITE);
+//        lblMouseEvent.setBounds(376, 539, 400, 40);
+//        getContentPane().add(lblMouseEvent);
+//        lblMouseEvent.setVisible(false);
 
         GameBackground.setIcon(new ImageIcon(JavaGameClientView.class.getResource("./image/startPage.png")));
         GameBackground.setBounds(0, 0, 1000, 640);
@@ -179,6 +217,11 @@ public class JavaGameClientView extends JFrame {
 
         try {
             socket = new Socket(ip_addr, Integer.parseInt(port_no));
+//			is = socket.getInputStream();
+//			dis = new DataInputStream(is);
+//			os = socket.getOutputStream();
+//			dos = new DataOutputStream(os);
+
             oos = new ObjectOutputStream(socket.getOutputStream());
             oos.flush();
             ois = new ObjectInputStream(socket.getInputStream());
@@ -190,9 +233,18 @@ public class JavaGameClientView extends JFrame {
             ListenNetwork net = new ListenNetwork();
             net.start();
             TextSendAction action = new TextSendAction();
-
+            //btnSend.addActionListener(action);
             txtInput.addActionListener(action);
             txtInput.requestFocus();
+//            ImageSendAction action2 = new ImageSendAction();
+//            imgBtn.addActionListener(action2);
+//            MyMouseEvent mouse = new MyMouseEvent();
+//            panel.addMouseMotionListener(mouse);
+//            panel.addMouseListener(mouse);
+//            MyMouseWheelEvent wheel = new MyMouseWheelEvent();
+//            panel.addMouseWheelListener(wheel);
+
+
         } catch (NumberFormatException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -203,6 +255,8 @@ public class JavaGameClientView extends JFrame {
 
     public void paint(Graphics g) {
         super.paint(g);
+        // Image 영역이 가려졌다 다시 나타날 때 그려준다.
+        //gc.drawImage(panelImage, 0, 0, this);
     }
 
     // Server Message를 수신해서 화면에 표시
@@ -245,12 +299,13 @@ public class JavaGameClientView extends JFrame {
                             break;
                             
                         case "800":
+//                        	System.out.println("되냐2");
+//                        	IsReady = true;
                         	if(cm.UserName.equals("2Players")) {
                         		game = new BubbleFrame(UserName, view);
-                        		game.requestFocus();
-                        		view.setVisible(false);
-                        		break;
+                        		setVisible(false);
                         	}
+//                        	game = new BubbleFrame(UserName, view);
                         	break;
                     }
                 } catch (IOException e) {
@@ -556,6 +611,23 @@ public class JavaGameClientView extends JFrame {
             public void keyPressed(KeyEvent e) {
             	ChatMsg msg = new ChatMsg(UserName, "800", "Ready");            	
                 SendObject(msg);
+                
+//            	//waiting이미지 띄우기
+            	//GameBackground.setIcon(new ImageIcon(JavaGameClientView.class.getResource("./image/backgroundMapService.png")));
+//            	//game = new BubbleFrame(UserName, view);
+//            	
+//            	//game = new BubbleFrame(UserName, ipAddr, portNo);
+//                if(IsReady==true) {
+//                	System.out.println("되냐3");
+//                	setVisible(false);
+//                }
+            	
+//            	game = new BubbleFrame(UserName, view);
+//            	setVisible(false);
+            	
+//            	if(IsReady==true) {
+//            		setVisible(false);
+//            	}
             }
         });
     }

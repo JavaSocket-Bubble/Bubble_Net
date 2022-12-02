@@ -428,6 +428,24 @@ public class JavaGameServer extends JFrame {
                         Logout();
                         break;
                     } else if (cm.code.matches("800")) { // ready
+                        //room.add(this);
+//                    	IsReady = cm.IsReady;
+//                    	for (int i = 0; i < user_vc.size(); i++) {
+//                            UserService user = (UserService) user_vc.elementAt(i);
+//                            if (user.IsReady == true) {
+//                            	ChatMsg obcm2 = new ChatMsg(msg, "800", msg);
+//                            	WriteOneObject(obcm2);
+//                            	System.out.println("서버에서 받음");
+//                            }
+//                                //user.WriteOne("준비완료");
+//                        }
+//                        System.out.println(room.size());
+//                        if(room.size()==2) {
+//                        	System.out.println("roomsize2");
+//                        	ChatMsg obcm2 = new ChatMsg("귓속말", "800", "준비완료");
+//                            WriteAllObject(obcm2);
+//                            user_vc = room;
+//                        }
                     	msg = String.format("[%s] %s %s", cm.UserName, cm.code, cm.data);
 						AppendText(msg);
                     	if(user_vc.size() == 2) {
