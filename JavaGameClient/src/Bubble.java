@@ -73,18 +73,6 @@ public class Bubble extends JLabel implements Moveable {
         state = 0;
     }
 
-//    private void initThread() {
-//        //버블은 동시이동 없으므로 스레드 하나만 필요
-//        new Thread(()->{
-//            if(player.getPlayerWay()== PlayerWay.LEFT) {
-//                left();
-//            }
-//            else {
-//                right();
-//            }
-//        }).start();
-//    }
-
     @Override
     public void left() {
         left = true;

@@ -103,13 +103,12 @@ public class BubbleFrame extends JFrame {
 			}
     	}
     	else if(cm.data.equals("bubble")) {
-    		player.attack();
-//    		if(!cm.UserName.equals(UserName)) {
-//        		player2.attack();
-//        	}
-//    		else {
-//				player.attack();
-//			}
+    		if(!cm.UserName.equals(UserName)) {
+        		player2.attack();
+        	}
+    		else {
+				player.attack();
+			}
     	}
 
     }
@@ -197,7 +196,7 @@ public class BubbleFrame extends JFrame {
                     case KeyEvent.VK_SPACE:
                         //Bubble bubble = new Bubble(mContext);
                         //add(bubble);
-                        //player.attack();
+                        player.attack();
                         ChatMsg msg = new ChatMsg(UserName, "300", "bubble");
                         view.SendObject(msg);
                         break;
