@@ -162,6 +162,7 @@ public class JavaGameServer extends JFrame {
 
         private Socket client_socket;
         private Vector user_vc;
+        private Vector<String> ready_vc = new Vector<String>();
         public String UserName = "";
         public String UserStatus;
        
@@ -208,6 +209,7 @@ public class JavaGameServer extends JFrame {
         public void Logout() {
             String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
             UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
+            ready_vc.removeElement(this);
             WriteAll(msg); // 나를 제외한 다른 User들에게 전송
             AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
         }
@@ -224,7 +226,7 @@ public class JavaGameServer extends JFrame {
         public void WriteAllObject(Object ob) {
             for (int i = 0; i < user_vc.size(); i++) {
                 UserService user = (UserService) user_vc.elementAt(i);
-                if (user.UserStatus == "O")
+                if (user.UserStatus == "O" || user.UserStatus == "R")
                     user.WriteOneObject(ob);
             }
         }
@@ -418,6 +420,7 @@ public class JavaGameServer extends JFrame {
 						//x = cm.getX();
 						//System.out.println(x);
 						WriteAllObject(cm);
+						//oos.writeObject(cm);
 						
 					} 
                     else if (cm.code.matches("500")) {
@@ -428,30 +431,24 @@ public class JavaGameServer extends JFrame {
                         Logout();
                         break;
                     } else if (cm.code.matches("800")) { // ready
-                        //room.add(this);
-//                    	IsReady = cm.IsReady;
-//                    	for (int i = 0; i < user_vc.size(); i++) {
-//                            UserService user = (UserService) user_vc.elementAt(i);
-//                            if (user.IsReady == true) {
-//                            	ChatMsg obcm2 = new ChatMsg(msg, "800", msg);
-//                            	WriteOneObject(obcm2);
-//                            	System.out.println("서버에서 받음");
-//                            }
-//                                //user.WriteOne("준비완료");
-//                        }
-//                        System.out.println(room.size());
-//                        if(room.size()==2) {
-//                        	System.out.println("roomsize2");
-//                        	ChatMsg obcm2 = new ChatMsg("귓속말", "800", "준비완료");
-//                            WriteAllObject(obcm2);
-//                            user_vc = room;
-//                        }
+                    	UserStatus="R";
                     	msg = String.format("[%s] %s %s", cm.UserName, cm.code, cm.data);
 						AppendText(msg);
-                    	if(user_vc.size() == 2) {
-                    		ChatMsg obcm2 = new ChatMsg("2Players", "800", msg);
-                    		WriteAllObject(obcm2);
+						for (int i = 0; i < user_vc.size(); i++) {
+						UserService user = (UserService) user_vc.elementAt(i);
+                    	if(user.UserStatus.equals("R")) 
+						ready_vc.add(user.UserStatus);
+						}
+                    	System.out.println(ready_vc.size());
+                    	if(ready_vc.size() == 2) {
+                    		cm = new ChatMsg("server", "800",Integer.toString(ready_vc.size()));
+                    		//oos.writeObject(cm);
+                    		WriteAllObject(cm);
+                    		msg = String.format("[%s] 보냈어 진짜야 결백헤ㅐ",cm.data);
+                    		AppendText(msg);
+                    		break;
                     	}
+                    	//메세지 보내는거 까진 했는데 ListenNetWork문제인지 받는걸 못허네...
                         break;
                         
                     }

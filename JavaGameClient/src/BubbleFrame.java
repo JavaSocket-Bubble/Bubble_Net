@@ -102,14 +102,14 @@ public class BubbleFrame extends JFrame {
 				player.up();
 			}
     	}
-//    	else if(cm.data.equals("bubble")) {
-//    		if(!cm.UserName.equals(UserName)) {
-//        		player2.attack();
-//        	}
-//    		else {
-//				player.attack();
-//			}
-//    	}
+    	else if(cm.data.equals("bubble")) {
+    		if(!cm.UserName.equals(UserName)) {
+        		player2.attack();
+        	}
+    		else {
+				player.attack();
+			}
+    	}
 
     }
     
